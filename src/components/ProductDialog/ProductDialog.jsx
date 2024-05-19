@@ -1,5 +1,7 @@
 import React from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, FormControl, InputLabel, Select, MenuItem, CircularProgress, Card, CardMedia
+import {
+  Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button,
+  FormControl, InputLabel, Select, MenuItem, CircularProgress, Card, CardMedia
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
@@ -31,18 +33,19 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
           value={nuevoProducto.precio}
           onChange={handleChange}
         />
-
-<TextField
-  margin="dense"
-  id="descripcion"
-  label="Descripción del Producto"
-  type="text"
-  fullWidth
-  variant="outlined"
-  name="descripcion"
-  value={nuevoProducto.descripcion || ''}  // Asegurarte de manejar un valor predeterminado
-  onChange={handleChange}
-/>
+        <TextField
+          margin="dense"
+          id="descripcion"
+          label="Descripción del Producto"
+          type="text"
+          fullWidth
+          variant="outlined"
+          name="descripcion"
+          value={nuevoProducto.descripcion || ''}  // Asegurarte de manejar un valor predeterminado
+          onChange={handleChange}
+          multiline
+          rows={4}  // Especificar el número de filas
+        />
         <FormControl fullWidth margin="dense">
           <InputLabel id="categoria-label">Categoría</InputLabel>
           <Select
@@ -65,14 +68,14 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
           startIcon={<AddCircleOutlineIcon />}
           sx={{ mt: 1 }}
         >
-            {editMode ? "Reemplaza tu imagen" : "Sube Tu Imagen"}
-            <input
-                type="file"
-                hidden
-                accept="image/*"
-                onChange={handleChange}
-                name="imagen"
-            />
+          {editMode ? "Reemplaza tu imagen" : "Sube Tu Imagen"}
+          <input
+            type="file"
+            hidden
+            accept="image/*"
+            onChange={handleChange}
+            name="imagen"
+          />
         </Button>
         {nuevoProducto.imagen && (
           <Card sx={{ margin: '10px 0', maxWidth: 345 }}>

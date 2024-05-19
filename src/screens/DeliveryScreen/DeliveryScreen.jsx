@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box,  CircularProgress, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Box, CircularProgress, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import OrderTable from './OrderTable';
 import Modals from './Modals';
 import SummaryCards from './SummaryCards';
 import './DeliveryScreen.css';
 import deliveryCosts from '../../data/barrios';
+import dayjs from 'dayjs'; // Añadir dayjs para manejar las fechas
 
 const DeliveryScreen = () => {
   const [orders, setOrders] = useState([]);
@@ -15,7 +16,7 @@ const DeliveryScreen = () => {
   const [openProductos, setOpenProductos] = useState(false);
   const [selectedComprobante, setSelectedComprobante] = useState('');
   const [selectedProductos, setSelectedProductos] = useState([]);
-  const [selectedDate, setSelectedDate] = useState('Todas');
+  const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD')); // Inicializar con la fecha actual
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -87,32 +88,34 @@ const DeliveryScreen = () => {
     ? orders
     : orders.filter((order) => order.fecha_hora.startsWith(selectedDate));
 
-  const transformOrders = filteredOrders.map((order) => {
-    const productos = JSON.parse(order.productos);
-    const productosDescripcion = productos
-      .map((prod) => `${productsMap[prod.id]} (x${prod.quantity})`)
-      .join(', ');
+  const transformOrders = filteredOrders
+    .sort((a, b) => new Date(a.fecha_hora) - new Date(b.fecha_hora)) // Ordenar cronológicamente
+    .map((order) => {
+      const productos = JSON.parse(order.productos);
+      const productosDescripcion = productos
+        .map((prod) => `${productsMap[prod.id]} (x${prod.quantity})`)
+        .join(', ');
 
-    const totalDomicilio = deliveryCosts[order.barrio] || 0;
-    const totalVenta = order.total_productos + totalDomicilio;
+      const totalDomicilio = deliveryCosts[order.barrio] || 0;
+      const totalVenta = order.total_productos + totalDomicilio;
 
-    return {
-      id: order.id,
-      nombre_completo: order.nombre_completo,
-      numero_telefono: order.numero_telefono,
-      direccion: order.direccion,
-      barrio: order.barrio,
-      fecha: order.fecha_hora,
-      productos: productosDescripcion,
-      productosDetalles: productos,
-      metodo_pago: order.metodo_pago,
-      comprobante_pago: order.comprobante_pago,
-      estado: order.estado,
-      total: order.total_productos,
-      total_domicilio: totalDomicilio,
-      total_venta: totalVenta
-    };
-  });
+      return {
+        id: order.id,
+        nombre_completo: order.nombre_completo,
+        numero_telefono: order.numero_telefono,
+        direccion: order.direccion,
+        barrio: order.barrio,
+        fecha: order.fecha_hora,
+        productos: productosDescripcion,
+        productosDetalles: productos,
+        metodo_pago: order.metodo_pago,
+        comprobante_pago: order.comprobante_pago,
+        estado: order.estado,
+        total: order.total_productos,
+        total_domicilio: totalDomicilio,
+        total_venta: totalVenta
+      };
+    });
 
   const summaryOrders = transformOrders.filter(order => ['Pedido Confirmado', 'Pedido Enviado'].includes(order.estado));
 
@@ -121,8 +124,8 @@ const DeliveryScreen = () => {
   const totalDomicilios = summaryOrders.reduce((sum, order) => sum + order.total_domicilio, 0);
   const numeroPedidos = summaryOrders.length;
 
-  // Obtener todas las fechas únicas de las órdenes
-  const uniqueDates = ['Todas', ...new Set(orders.map((order) => order.fecha_hora.split(' ')[0]))];
+  // Obtener todas las fechas únicas de las órdenes y ordenarlas cronológicamente
+  const uniqueDates = ['Todas', ...[...new Set(orders.map((order) => order.fecha_hora.split(' ')[0]))].sort((a, b) => new Date(a) - new Date(b))];
 
   return (
     <Box sx={{ p: 4 }}>

@@ -10,6 +10,7 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 import LoginForm from '../LoginForm/LoginForm'; 
 
@@ -81,6 +82,7 @@ const Navbar = () => {
               { to: "/clients", icon: <EmojiPeopleIcon />, text: "Clientes" },
               { to: "/data", icon: <StorefrontIcon />, text: "Data" },
               { to: "/products", icon: <AddShoppingCartIcon />, text: "Productos" },
+              { to: "/stock", icon: <InventoryIcon />, text: "Inventarios" },
               { to: "/params", icon: <SettingsIcon />, text: "Parametros" },
               { to: "/soporte", icon: <SupportAgentIcon />, text: "Soporte" },
             ].map(item => (
