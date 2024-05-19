@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button,
   FormControl, InputLabel, Select, MenuItem, CircularProgress, Card, CardMedia
@@ -6,6 +7,21 @@ import {
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nuevoProducto, loading, editMode }) {
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const response = await axios.get('https://domicilios-madriguera-ac104c9fedbe.herokuapp.com/categorias');
+        setCategorias(response.data);
+      } catch (error) {
+        console.error('Error fetching categorias:', error);
+      }
+    };
+
+    fetchCategorias();
+  }, []);
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Añadir Nuevo Producto</DialogTitle>
@@ -56,10 +72,11 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
             name="categoria"
             onChange={handleChange}
           >
-            <MenuItem value="Entradas">Entradas</MenuItem>
-            <MenuItem value="Fuertes">Fuertes</MenuItem>
-            <MenuItem value="Postres">Postres</MenuItem>
-            <MenuItem value="Bebidas">Bebidas</MenuItem>
+            {categorias.map((categoria) => (
+              <MenuItem key={categoria.id} value={categoria.nombre}>
+                {categoria.nombre}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <Button
