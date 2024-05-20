@@ -25,6 +25,7 @@ const formatCurrency = (value) => {
 
 const StyledCard = styled(Card)({
   border: '1px solid black',
+  borderRadius: '16px',
   transition: 'transform 0.3s',
   '&:hover': {
     transform: 'scale(1.02)',
@@ -140,10 +141,10 @@ const StockScreen = () => {
           ),
         }}
       />
-      <Button variant="contained" onClick={handleDialogOpen} style={{ marginBottom: '20px', backgroundColor: '#5A67D8', textTransform: 'none' }}>
+      <Button variant="contained" onClick={handleDialogOpen} size="medium" sx={{my: 2, backgroundColor: '#5E55FE', color: 'white', borderRadius: '10px', '&:hover': { backgroundColor: '#7b45a1' }, mr: 1}}>
         Registrar Movimiento de Inventario
       </Button>
-      <Button variant="contained" onClick={handleMovimientosDialogOpen} style={{ marginBottom: '20px', marginLeft: '10px', backgroundColor: '#5A67D8', textTransform: 'none' }}>
+      <Button variant="contained" onClick={handleMovimientosDialogOpen} size="medium" sx={{my: 2, backgroundColor: '#5E55FE', color: 'white', borderRadius: '10px', '&:hover': { backgroundColor: '#7b45a1' },}}>
         Ver Movimientos de Inventario
       </Button>
       {loading ? (
@@ -168,7 +169,7 @@ const StockScreen = () => {
                         value={stockChanges[producto.id] !== undefined ? stockChanges[producto.id] : producto.stock}
                         onChange={(e) => handleStockChange(producto.id, e.target.value)}
                       />
-                      <IconButton onClick={() => handleSaveStock(producto.id)} color="primary">
+                      <IconButton onClick={() => handleSaveStock(producto.id)} sx={{ color: '#5E55FE'}}>
                         <SaveIcon />
                       </IconButton>
                       <IconButton onClick={() => handleCancelClick(producto.id)} color="secondary">
@@ -178,7 +179,7 @@ const StockScreen = () => {
                   ) : (
                     <>
                       <Typography variant="body1">Stock: {producto.stock !== undefined && producto.stock !== null ? producto.stock : 0}</Typography>
-                      <IconButton onClick={() => handleEditClick(producto.id)} sx={{ color: '#5A67D8'}}>
+                      <IconButton onClick={() => handleEditClick(producto.id)} sx={{ color: '#5E55FE'}}>
                         <EditIcon />
                       </IconButton>
                     </>

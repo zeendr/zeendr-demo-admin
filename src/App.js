@@ -16,6 +16,8 @@ import ClientsScreen from './screens/ClientsScreen/ClientsScreen';
 import ParametrosScreen from './screens/ParametrosScreen/ParametrosScreen';
 import SoporteScreen from './screens/SoporteScreen/SoporteScreen';
 import StockScreen from './screens/StockScreen/StockScreen';
+import CostosScreen from './screens/CostosScreen/CostosScreen';
+import ProvedoresScreen from './screens/ProvedoresScreen/ProvedoresScreen';
 
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -47,6 +49,8 @@ const ProtectedRoutes = () => {
           <Route path="/params" element={<ParametrosScreen />} />
           <Route path="/soporte" element={<SoporteScreen />} />
           <Route path="/stock" element={<StockScreen />} />
+          <Route path="/costos" element={<CostosScreen />} />
+          <Route path="/suppliers" element={<ProvedoresScreen />} />
         </Routes>
       </Box>
     </Box>

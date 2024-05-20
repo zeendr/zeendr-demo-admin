@@ -83,7 +83,7 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
           variant="contained"
           component="label"
           startIcon={<AddCircleOutlineIcon />}
-          sx={{ mt: 1 }}
+          size="medium" sx={{mt: 2, backgroundColor: '#5E55FE', color: 'white', borderRadius: '10px', '&:hover': { backgroundColor: '#7b45a1' },}}
         >
           {editMode ? "Reemplaza tu imagen" : "Sube Tu Imagen"}
           <input
@@ -106,8 +106,8 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancelar</Button>
-        <Button onClick={handleAddProducto} disabled={loading}>
+        <Button onClick={handleClose} sx={{ color: '#5E55FE'}}>Cancelar</Button>
+        <Button onClick={handleAddProducto} disabled={loading} sx={{ color: '#5E55FE'}}>
           {loading ? <CircularProgress size={24} /> : 'Agregar'}
         </Button>
       </DialogActions>

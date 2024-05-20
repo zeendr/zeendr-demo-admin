@@ -10,11 +10,13 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import InventoryIcon from '@mui/icons-material/Inventory';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import WaterfallChartIcon from '@mui/icons-material/WaterfallChart';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 
 import LoginForm from '../LoginForm/LoginForm'; 
 
-import logo from '../../assets/logo2.png'
+import logo from '../../assets/logo33.png'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/authSlice'; 
@@ -79,10 +81,12 @@ const Navbar = () => {
           <List>
             {[
               { to: "/orders", icon: <DeliveryDiningIcon />, text: "Ordenes" },
-              { to: "/clients", icon: <EmojiPeopleIcon />, text: "Clientes" },
-              { to: "/data", icon: <StorefrontIcon />, text: "Data" },
               { to: "/products", icon: <AddShoppingCartIcon />, text: "Productos" },
-              { to: "/stock", icon: <InventoryIcon />, text: "Inventarios" },
+              { to: "/stock", icon: <FastfoodIcon />, text: "Stock de Productos" },
+              { to: "/clients", icon: <EmojiPeopleIcon />, text: "Clientes" },
+              { to: "/costos", icon: <AttachMoneyIcon />, text: "Centro de Costos" },
+              { to: "/suppliers", icon: <StorefrontIcon />, text: "Proveedores" },  
+              { to: "/data", icon: <WaterfallChartIcon />, text: "Data" },        
               { to: "/params", icon: <SettingsIcon />, text: "Parametros" },
               { to: "/soporte", icon: <SupportAgentIcon />, text: "Soporte" },
             ].map(item => (
@@ -111,7 +115,7 @@ const Navbar = () => {
             onClick={isAuthenticated ? handleLogout : handleLoginOpen}
             variant="contained"
             fullWidth
-            sx={{ backgroundColor: '#EFE8DD', '&:hover': { backgroundColor: '#f3eee7' }, color: 'black', fontFamily: 'Poppins', borderRadius: '10px', textTransform: 'none', padding: '10px 7px', fontSize: '17px', marginTop: '7px', marginBottom: '5px', marginLeft: '7px', fontWeight: 'bold' }}
+            sx={{ backgroundColor: '#5E55FE', '&:hover': { backgroundColor: '#7b45a1' }, color: 'white', fontFamily: 'Poppins', borderRadius: '10px', textTransform: 'none', padding: '10px 7px', fontSize: '17px', marginTop: '7px', marginBottom: '5px', marginLeft: '7px', fontWeight: 'bold' }}
           >
             {isAuthenticated ? 'Cerrar Sesion' : 'Iniciar Sesion'}
           </Button>

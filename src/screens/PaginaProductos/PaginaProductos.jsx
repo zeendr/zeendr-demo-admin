@@ -100,9 +100,9 @@ function PaginaProductos() {
     };
 
     return (
-        <div style={{ backgroundColor: '#EDE9DE', minHeight: '100vh' }}>
+        <div style={{ backgroundColor: 'white', minHeight: '100vh' }}>
         <Container maxWidth="xl">
-            <Button startIcon={<AddCircleOutlineIcon />} onClick={handleClickOpen} variant="contained" color="primary" sx={{ mt: 2 }}>
+            <Button startIcon={<AddCircleOutlineIcon />} onClick={handleClickOpen} vvariant="contained" size="large" sx={{mt: 2, backgroundColor: '#5E55FE', color: 'white', borderRadius: '10px', '&:hover': { backgroundColor: '#7b45a1' },}}>
                 Agregar Producto
             </Button>
             {loading ? <CircularProgress /> : (
