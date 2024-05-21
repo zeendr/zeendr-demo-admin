@@ -6,13 +6,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 
-const primaryColor = '#4A90E2';
+const primaryColor = '#5E55FE';
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: primaryColor,
   color: theme.palette.common.white,
+  textTransform: 'none',
   '&:hover': {
-    backgroundColor: primaryColor,
+    backgroundColor: '#7b45a1',
   }
 }));
 

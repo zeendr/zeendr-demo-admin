@@ -5,10 +5,16 @@ import logoClient from '../../assets/logo2.png';
 import logoDeveloper from '../../assets/logo33.png';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import SettingsIcon from '@mui/icons-material/Settings';
-import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 
 function HomePage() {
   const theme = useTheme();
@@ -58,11 +64,11 @@ function HomePage() {
         </Typography>
         <Grid container spacing={4} justifyContent="center">
           {[
-            { title: "Scan QR", desc: "Escanee códigos QR para obtener información valiosa.", link: '/qr', icon: <QrCodeIcon /> },
-            { title: "Clientes", desc: "Administra la información de tus clientes.", link: '/clientes', icon: <EmojiPeopleIcon /> },
-            { title: "Data", desc: "Accede a los datos relevantes de tu negocio.", link: '/data', icon: <StorefrontIcon /> },
-            { title: "Fidelización", desc: "Crea y gestiona tus planes de fidelización.", link: '/fidelizacion', icon: <Diversity3Icon /> },
-            { title: "Mi Cuenta", desc: "Administra tus ajustes y preferencias.", link: '/cuenta', icon: <SettingsIcon /> },
+            { title: "Ordenes", desc: "Visualice todos sus pedidos a domicilio en tiempo real", link: '/orders', icon: <DeliveryDiningIcon /> },
+            { title: "Productos", desc: "Añade y elimina productos para que tus clientes ordenen", link: '/products', icon: <AddShoppingCartIcon /> },
+            { title: "Stock Productos", desc: "Controle los inventarios de sus productos y sus ventas", link: '/stock', icon: <FastfoodIcon /> },
+            { title: "Clientes", desc: "Conozca y entienda a sus clientes para vender mas", link: '/clients', icon: <EmojiPeopleIcon /> },
+            { title: "Centro de Costos", desc: "Tenga control total sobre los costos de su negocio", link: '/costos', icon: <AttachMoneyIcon /> },
             { title: "Soporte", desc: "Obtén ayuda en tiempo real cuando lo necesites.", link: '/soporte', icon: <SupportAgentIcon /> }
           ].map((item, index) => (
             <Grid key={index} item xs={12} sm={6} md={4}>

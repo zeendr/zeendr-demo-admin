@@ -3,7 +3,7 @@ import { Box, TextField, Button, Typography, InputAdornment, IconButton } from '
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import logo from '../../assets/logo2.png';
+import logo from '../../assets/logo33.png';
 import backgroundImage from '../../assets/fondo.png';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -83,7 +83,7 @@ const LoginForm = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    sx={{ backgroundColor: '#EFE8DD', '&:hover': { backgroundColor: '#f3eee7' }, color: 'black', fontFamily: 'Poppins', borderRadius: '10px', textTransform: 'none', padding: '10px 7px', fontSize: '17px', marginTop: '7px', marginBottom: '5px', marginLeft: '7px', fontWeight: 'bold' }}
+                    sx={{ backgroundColor: '#5E55FE', '&:hover': { backgroundColor: '#7b45a1' }, color: 'white', fontFamily: 'Poppins', borderRadius: '10px', textTransform: 'none', padding: '10px 7px', fontSize: '17px', marginTop: '7px', marginBottom: '5px', marginLeft: '7px', fontWeight: 'bold' }}
                 >
                     Iniciar sesión
                 </Button>

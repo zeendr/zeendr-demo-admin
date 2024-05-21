@@ -38,7 +38,7 @@ const ParametrosScreen = () => {
         <Tab label="Barrios y Costos de Domicilio" id="tab-0" aria-controls="tabpanel-0" />
         <Tab label="Categorías del Menú" id="tab-1" aria-controls="tabpanel-1" />
         <Tab label="Mensajes de WhatsApp" id="tab-2" aria-controls="tabpanel-2" />
-        <Tab label="Horarios de Atención" id="tab-3" aria-controls="tabpanel-3" /> {/* Nueva pestaña */}
+        <Tab label="Horarios de Atención" id="tab-3" aria-controls="tabpanel-3" /> 
       </Tabs>
       <TabPanel value={tabValue} index={0}>
         <BarrioTable />

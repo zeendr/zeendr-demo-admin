@@ -75,9 +75,7 @@ const CostosScreen = () => {
                 <Typography variant="h6" color="textPrimary">
                   Precio: {formatCurrency(producto.precio)}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Categoría: {producto.categoria}
-                </Typography>
+
                 {producto.costo && (
                   <>
                     <Typography variant="body2" color="textSecondary">
