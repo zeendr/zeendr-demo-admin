@@ -8,12 +8,12 @@ import ProductoDialog from '../../components/ProductDialog/ProductDialog';
 function PaginaProductos() {
     const [open, setOpen] = useState(false);
     const [productos, setProductos] = useState([]);
-    const [nuevoProducto, setNuevoProducto] = useState({ nombre: '', precio: '', imagen: null, categoria: '' });
+    const [nuevoProducto, setNuevoProducto] = useState({ nombre: '', precio: '', imagen: null, categoria: '', descripcion: '' });
     const [editMode, setEditMode] = useState(false);
     const [productoId, setProductoId] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const apiBaseUrl = process.env.REACT_APP_API_URL; // Asegúrate de que esta variable está definida en tu archivo .env
+    const apiBaseUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         fetchProductos();
@@ -85,7 +85,7 @@ function PaginaProductos() {
     const handleClose = () => {
         setOpen(false);
         setEditMode(false);
-        setNuevoProducto({ nombre: '', precio: '', imagen: null, categoria: '' });
+        setNuevoProducto({ nombre: '', precio: '', imagen: null, categoria: '', descripcion: '' });
     };
 
     const handleChange = (e) => {
@@ -102,7 +102,7 @@ function PaginaProductos() {
     return (
         <div style={{ backgroundColor: 'white', minHeight: '100vh' }}>
         <Container maxWidth="xl">
-            <Button startIcon={<AddCircleOutlineIcon />} onClick={handleClickOpen} vvariant="contained" size="large" sx={{mt: 2, backgroundColor: '#5E55FE', color: 'white', borderRadius: '10px', '&:hover': { backgroundColor: '#7b45a1' },}}>
+            <Button startIcon={<AddCircleOutlineIcon />} onClick={handleClickOpen} variant="contained" size="large" sx={{mt: 2, backgroundColor: '#5E55FE', color: 'white', borderRadius: '10px', '&:hover': { backgroundColor: '#7b45a1' },}}>
                 Agregar Producto
             </Button>
             {loading ? <CircularProgress /> : (
@@ -127,5 +127,3 @@ function PaginaProductos() {
 }
 
 export default PaginaProductos;
-
-

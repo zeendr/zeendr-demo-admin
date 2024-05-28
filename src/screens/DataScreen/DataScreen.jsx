@@ -36,9 +36,9 @@ const DataScreen = () => {
         </Box>
       ) : (
         <>
-          <Typography variant="h3" component="h1" sx={{ textAlign: 'center', mb: 4 }}>
-            Análisis de Datos de Domicilios Madriguera
-          </Typography>
+      <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+        Analisis de Datos
+      </Typography>
           <SummaryKPI orders={orders} />
           <SalesChart orders={orders} deliveryCosts={deliveryCosts} />
           <TransactionCountChart orders={orders} />

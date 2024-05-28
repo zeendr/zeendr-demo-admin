@@ -65,9 +65,9 @@ function SoporteScreen() {
   return (
     <Container maxWidth="xl">
       <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Página de Soporte
-        </Typography>
+      <Typography variant="h4" gutterBottom sx={{ textAlign: 'left', fontWeight: 'bold' }}>
+        Centro de Soporte
+      </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <FormControl fullWidth margin="normal">
             <InputLabel id="subject-label">Asunto</InputLabel>

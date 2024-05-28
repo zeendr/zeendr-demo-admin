@@ -2,7 +2,7 @@ import React from 'react';
 import { CardContent, Typography, Grid, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { red, blue } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 import { ProductCard, ProductMedia } from '../../styles/styledComponents';
 
 function ProductoCard({ producto, onDelete, onEdit }) {

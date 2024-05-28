@@ -24,7 +24,7 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Añadir Nuevo Producto</DialogTitle>
+      <DialogTitle>{editMode ? 'Editar Producto' : 'Añadir Nuevo Producto'}</DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -57,10 +57,10 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
           fullWidth
           variant="outlined"
           name="descripcion"
-          value={nuevoProducto.descripcion || ''}  // Asegurarte de manejar un valor predeterminado
+          value={nuevoProducto.descripcion || ''}
           onChange={handleChange}
           multiline
-          rows={4}  // Especificar el número de filas
+          rows={4}
         />
         <FormControl fullWidth margin="dense">
           <InputLabel id="categoria-label">Categoría</InputLabel>
@@ -85,7 +85,7 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
           startIcon={<AddCircleOutlineIcon />}
           size="medium" sx={{mt: 2, backgroundColor: '#5E55FE', color: 'white', borderRadius: '10px', '&:hover': { backgroundColor: '#7b45a1' },}}
         >
-          {editMode ? "Reemplaza tu imagen" : "Sube Tu Imagen"}
+          {editMode ? "Reemplazar Imagen" : "Subir Imagen"}
           <input
             type="file"
             hidden
@@ -106,9 +106,9 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} sx={{ color: '#5E55FE'}}>Cancelar</Button>
-        <Button onClick={handleAddProducto} disabled={loading} sx={{ color: '#5E55FE'}}>
-          {loading ? <CircularProgress size={24} /> : 'Agregar'}
+        <Button onClick={handleClose} sx={{ color: '#5E55FE' }}>Cancelar</Button>
+        <Button onClick={handleAddProducto} disabled={loading} sx={{ color: '#5E55FE' }}>
+          {loading ? <CircularProgress size={24} /> : editMode ? 'Guardar Cambios' : 'Agregar'}
         </Button>
       </DialogActions>
     </Dialog>
@@ -116,3 +116,4 @@ function ProductoDialog({ open, handleClose, handleChange, handleAddProducto, nu
 }
 
 export default ProductoDialog;
+

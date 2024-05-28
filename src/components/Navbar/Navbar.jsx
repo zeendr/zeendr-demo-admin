@@ -13,6 +13,7 @@ import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import WaterfallChartIcon from '@mui/icons-material/WaterfallChart';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
+import PaymentIcon from '@mui/icons-material/Payment';
 
 import LoginForm from '../LoginForm/LoginForm'; 
 
@@ -86,6 +87,7 @@ const Navbar = () => {
               { to: "/clients", icon: <EmojiPeopleIcon />, text: "Clientes" },
               { to: "/costos", icon: <AttachMoneyIcon />, text: "Centro de Costos" },
               { to: "/suppliers", icon: <StorefrontIcon />, text: "Proveedores" },  
+              { to: "/gastos", icon: <PaymentIcon />, text: "Gastos Operacion" },
               { to: "/data", icon: <WaterfallChartIcon />, text: "Data" },        
               { to: "/params", icon: <SettingsIcon />, text: "Parametros" },
               { to: "/soporte", icon: <SupportAgentIcon />, text: "Soporte" },

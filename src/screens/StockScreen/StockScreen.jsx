@@ -125,7 +125,9 @@ const StockScreen = () => {
 
   return (
     <Container maxWidth="xl" style={{ backgroundColor: '#EDE9DE', minHeight: '100vh', paddingTop: '20px' }}>
-      <Typography variant="h4" gutterBottom>Gestión de Inventarios</Typography>
+      <Typography variant="h4" gutterBottom sx={{ textAlign: 'left', fontWeight: 'bold' }}>
+        Gestion de Inventarios
+      </Typography>
       <TextField
         variant="outlined"
         placeholder="Buscar producto"

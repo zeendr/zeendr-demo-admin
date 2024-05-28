@@ -79,9 +79,9 @@ const ClientsScreen = () => {
         </Box>
       ) : (
         <>
-          <Typography variant="h4" component="h1" sx={{ textAlign: 'center', mb: 4 }}>
-            CRM de Clientes
-          </Typography>
+      <Typography variant="h4" gutterBottom sx={{ textAlign: 'left', fontWeight: 'bold' }}>
+        CRM de Clientes
+      </Typography>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>

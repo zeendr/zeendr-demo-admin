@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, CardContent, Typography, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField } from '@mui/material';
-import { ProductCard, ProductMedia } from '../../styles/styledComponents';
-
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value);
-};
+import { Box, Typography, Grid, Button } from '@mui/material';
+import ProductCardComponent from './ProductCardComponent';
+import CostDialogComponent from './CostDialogComponent';
+import NewProductCostDialogComponent from './NewProductCostDialogComponent'; // Importa el nuevo componente
+import RecipeDialogComponent from './RecipeDialogComponent'; // Importa el componente de la receta
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 const CostosScreen = () => {
   const [productos, setProductos] = useState([]);
+  const [insumos, setInsumos] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedInsumos, setSelectedInsumos] = useState([]);
   const [costo, setCosto] = useState('');
+  const [unidadesProducidas, setUnidadesProducidas] = useState(1); 
+  const [openNewProductDialog, setOpenNewProductDialog] = useState(false); // Nuevo estado para el diálogo de nuevo producto
+  const [openRecipeDialog, setOpenRecipeDialog] = useState(false); // Nuevo estado para el diálogo de receta
+  const [selectedRecipeProduct, setSelectedRecipeProduct] = useState(null); // Producto seleccionado para la receta
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -27,97 +28,163 @@ const CostosScreen = () => {
       }
     };
 
+    const fetchInsumos = async () => {
+      try {
+        const response = await axios.get('https://domicilios-madriguera-ac104c9fedbe.herokuapp.com/productos_proveedor');
+        setInsumos(response.data);
+      } catch (error) {
+        console.error('Error fetching insumos:', error);
+      }
+    };
+
     fetchProductos();
+    fetchInsumos();
   }, []);
 
   const handleOpenDialog = (producto) => {
+    const updatedInsumos = (producto.insumos || []).map(insumo => ({
+      ...insumo,
+      insumoId: insumo.insumo_id
+    }));
     setSelectedProduct(producto);
-    setCosto(producto.costo || '');
+    setSelectedInsumos(updatedInsumos);
+    setUnidadesProducidas(producto.unidades_producidas || 1);
+    calculateCost(updatedInsumos, producto.unidades_producidas || 1);
   };
 
   const handleCloseDialog = () => {
     setSelectedProduct(null);
+    setSelectedInsumos([]);
     setCosto('');
+    setUnidadesProducidas(1);
   };
 
   const handleSaveCosto = async () => {
     try {
-      await axios.put(`https://domicilios-madriguera-ac104c9fedbe.herokuapp.com/productos/${selectedProduct.id}`, { costo: parseFloat(costo) });
-      setProductos(productos.map((producto) => (producto.id === selectedProduct.id ? { ...producto, costo: parseFloat(costo) } : producto)));
+      const updatedProduct = {
+        ...selectedProduct,
+        costo: costo !== '' ? parseFloat(costo) : null,
+        insumos: selectedInsumos.map(insumo => ({
+          insumo_id: insumo.insumoId,
+          cantidad: insumo.cantidad,
+          unidad: insumo.unidad
+        })),
+        unidades_producidas: unidadesProducidas
+      };
+      await axios.put(`https://domicilios-madriguera-ac104c9fedbe.herokuapp.com/productos/${selectedProduct.id}`, updatedProduct);
+      setProductos(productos.map((producto) => (producto.id === selectedProduct.id ? updatedProduct : producto)));
       handleCloseDialog();
     } catch (error) {
       console.error('Error updating product cost:', error);
     }
   };
 
-  const calculateUtility = (precio, costo) => precio - costo;
-  const calculateMargin = (precio, costo) => ((precio - costo) / precio) * 100;
+  const handleAddInsumo = () => {
+    setSelectedInsumos([...selectedInsumos, { insumoId: '', cantidad: '', unidad: '' }]);
+  };
+
+  const handleInsumoChange = (index, field, value) => {
+    const newInsumos = [...selectedInsumos];
+    newInsumos[index][field] = value;
+    setSelectedInsumos(newInsumos);
+    calculateCost(newInsumos, unidadesProducidas);
+  };
+
+  const handleUnidadesProducidasChange = (value) => {
+    setUnidadesProducidas(value);
+    calculateCost(selectedInsumos, value);
+  };
+
+  const calculateCost = (selectedInsumos, unidadesProducidas) => {
+    let totalCost = 0;
+    selectedInsumos.forEach(insumo => {
+      const insumoData = insumos.find(i => i.id === insumo.insumoId);
+      if (insumoData) {
+        let costPerUnit;
+        switch (insumo.unidad) {
+          case 'g':
+            costPerUnit = insumoData.precio / (insumoData.cantidad * 1000);
+            totalCost += costPerUnit * parseFloat(insumo.cantidad || 0);
+            break;
+          case 'kg':
+            costPerUnit = insumoData.precio / insumoData.cantidad;
+            totalCost += costPerUnit * parseFloat(insumo.cantidad || 0);
+            break;
+          case 'ml':
+            costPerUnit = insumoData.precio / (insumoData.cantidad * 1000);
+            totalCost += costPerUnit * parseFloat(insumo.cantidad || 0);
+            break;
+          case 'l':
+            costPerUnit = insumoData.precio / insumoData.cantidad;
+            totalCost += costPerUnit * parseFloat(insumo.cantidad || 0);
+            break;
+          case 'unidades':
+            costPerUnit = insumoData.precio / insumoData.cantidad;
+            totalCost += costPerUnit * parseFloat(insumo.cantidad || 0);
+            break;
+          default:
+            break;
+        }
+      }
+    });
+    const costPerUnit = totalCost / unidadesProducidas;
+    setCosto(costPerUnit.toFixed(2));
+  };
+
+  const handleOpenRecipeDialog = (producto) => {
+    setSelectedRecipeProduct(producto);
+    setOpenRecipeDialog(true);
+  };
+
+  const handleCloseRecipeDialog = () => {
+    setSelectedRecipeProduct(null);
+    setOpenRecipeDialog(false);
+  };
 
   return (
     <Box sx={{ p: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Centro de Costos
+      <Typography variant="h4" gutterBottom sx={{ textAlign: 'left', fontWeight: 'bold' }}>
+        Centro de Costos y Estandarizacion
       </Typography>
+      <Button onClick={() => setOpenNewProductDialog(true)} sx={{ mt: 2, mb: 2, backgroundColor: '#5E55FE', color: 'white', borderRadius: '10px', '&:hover': { backgroundColor: '#7b45a1' }, }} variant="contained" startIcon={<AttachMoneyIcon />}>
+        Calcular el precio de un nuevo producto
+      </Button>
       <Grid container spacing={2}>
         {productos.map((producto) => (
-          <Grid item key={producto.id} xs={12} sm={6} md={4}>
-            <ProductCard onClick={() => handleOpenDialog(producto)}>
-              <ProductMedia
-                component="img"
-                alt={producto.nombre}
-                image={producto.imagen_url}
-                title={producto.nombre}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {producto.nombre}
-                </Typography>
-                <Typography variant="h6" color="textPrimary">
-                  Precio: {formatCurrency(producto.precio)}
-                </Typography>
-
-                {producto.costo && (
-                  <>
-                    <Typography variant="body2" color="textSecondary">
-                      Costo: {formatCurrency(producto.costo)}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      Utilidad: {formatCurrency(calculateUtility(producto.precio, producto.costo))}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      Margen de Ganancia: {calculateMargin(producto.precio, producto.costo).toFixed(2)}%
-                    </Typography>
-                  </>
-                )}
-              </CardContent>
-            </ProductCard>
-          </Grid>
+          <ProductCardComponent key={producto.id} producto={producto} handleOpenDialog={handleOpenDialog} handleOpenRecipeDialog={handleOpenRecipeDialog} />
         ))}
       </Grid>
 
-      <Dialog open={!!selectedProduct} onClose={handleCloseDialog}>
-        <DialogTitle>Actualizar Costo del Producto</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Ingresa el costo del producto {selectedProduct?.nombre}:
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Costo"
-            type="number"
-            fullWidth
-            value={costo}
-            onChange={(e) => setCosto(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} sx={{ color: '#5E55FE'}}>Cancelar</Button>
-          <Button onClick={handleSaveCosto} sx={{ color: '#5E55FE'}}>Guardar</Button>
-        </DialogActions>
-      </Dialog>
+      <CostDialogComponent
+        open={!!selectedProduct}
+        selectedProduct={selectedProduct}
+        selectedInsumos={selectedInsumos}
+        insumos={insumos}
+        costo={costo}
+        setCosto={setCosto}
+        unidadesProducidas={unidadesProducidas}
+        handleUnidadesProducidasChange={handleUnidadesProducidasChange}
+        handleCloseDialog={handleCloseDialog}
+        handleSaveCosto={handleSaveCosto}
+        handleAddInsumo={handleAddInsumo}
+        handleInsumoChange={handleInsumoChange}
+      />
+      
+      <NewProductCostDialogComponent
+        open={openNewProductDialog}
+        insumos={insumos}
+        handleCloseDialog={() => setOpenNewProductDialog(false)}
+      />
+
+      <RecipeDialogComponent
+        open={openRecipeDialog}
+        producto={selectedRecipeProduct}
+        handleCloseDialog={handleCloseRecipeDialog}
+      />
     </Box>
   );
 };
 
 export default CostosScreen;
+
+
